@@ -1,0 +1,17 @@
+[Unit]
+Description=devops-coding-challenge
+After=syslog.target
+
+[Service]
+Type=forking
+WorkingDirectory=/webapps/kmk
+RemainAfterExit=no
+Restart=on-failure
+RestartSec=10s
+SyslogIdentifier=devops-coding-challenge
+ExecStart=/bin/sh -c "/webapps/kmk/app.py"
+User=ubuntu
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

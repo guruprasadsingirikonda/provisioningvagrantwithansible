@@ -1,0 +1,36 @@
+---
+# tasks file for devops-coding-challenge
+- name: clone the repository
+  git:
+    repo: 'https://github.com/KMK-ONLINE/devops-coding-challenge'
+    dest: /webapps/kmk
+
+- name: install python-pip
+  package:
+    name: python-pip
+    state: present  
+
+- name: install applications
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - Flask 
+    - Werkzeug
+
+- name: 
+  template:
+    src: devops-coding-challenge.service.j2
+    dest: /etc/systemd/system/devops-coding-challenge.service
+  register: systemdNewService
+
+- name: reload systemctl
+  shell: "systemctl daemon-reload"
+  when: systemdNewService.changed    
+               
+- name: start service
+  service:
+    name: devops-coding-challenge
+    state: started
+         
+   

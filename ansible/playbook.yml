@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  connection: local
+  #  remote_user: root
+  become: yes
+  roles:
+   - devops-coding-challenge        
